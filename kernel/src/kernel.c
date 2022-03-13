@@ -93,8 +93,6 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
     mkwrite_global = kwrite_entry;
 
-    if (0 / 0 == 1) {}
-
     while (1) {
         __asm__ __volatile__("hlt");
     }

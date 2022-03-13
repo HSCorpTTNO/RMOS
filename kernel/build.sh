@@ -1,5 +1,5 @@
 cp -v kernel.elf limine.cfg limine/limine.sys \
-      limine/limine-cd.bin limine/limine-eltorito-efi.bin Omega
+      limine/limine-cd.bin limine/limine-eltorito-efi.bin RMOS
 
 
 xorriso -as mkisofs -b limine-cd.bin \

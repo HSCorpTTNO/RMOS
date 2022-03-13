@@ -1,5 +1,5 @@
 ; Hard work all by Ian Marco Moffett.
-; "Sometimes you don't notice the hardware people do." 
+; "Sometimes you don't notice the hard work people do." 
 ; - Ian.
 
 global div0_handler

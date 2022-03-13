@@ -5,7 +5,7 @@ void print_stack(uint8_t* stack) {
     kwrite("(Addresses aren't accuarte but the data is actually coming from the stack.)\n");
     kwrite("ASCII ART BY IAN MARCO MOFFETT!\n\n");
 
-    kwrite("<==== Stack ====>      Fun fact! Stack is in BSS segment!\n"); 
+    kwrite("<==== Stack ====>\n"); 
     kwrite(STACK_TOP);
 
     kwrite(STACK_C1);

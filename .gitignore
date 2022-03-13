@@ -1,0 +1,5 @@
+*.iso
+*.d
+*.o
+*.elf
+kernel/limine/

@@ -1,4 +1,4 @@
-#include "../string.h"
+#include <util/string.h>
 
 char res[25];
 

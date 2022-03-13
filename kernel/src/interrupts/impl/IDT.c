@@ -1,4 +1,4 @@
-#include "../IDT.h"
+#include <interrupts/IDT.h>
 
 static idt_vector_t idt[256];
 static idtr_t idtr;

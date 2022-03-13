@@ -2,4 +2,5 @@
 *.d
 *.o
 *.elf
+logfile.txt
 kernel/limine/

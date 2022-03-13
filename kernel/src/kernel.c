@@ -2,6 +2,8 @@
 #include <stddef.h>
 #include "../stivale2.h"
 #include "util/string.h"
+#include "interrupts/IDT.h"
+#include "interrupts/exceptions.h"
 
 
 static uint8_t stack[8000];
@@ -64,6 +66,22 @@ __attribute__((section(".stivale2hdr"), used)) static struct stivale2_header sti
 
 void _start(struct stivale2_struct* ss, uint64_t id) {
     struct stivale2_struct_tag_terminal* term_tag = get_tag(ss, STIVALE2_STRUCT_TAG_TERMINAL_ID);
+    idt_set_vector(0x0, div0_handler);
+    idt_set_vector(0x1, debug_excp_handler);
+    idt_set_vector(0x3, breakpoint_handler);
+    idt_set_vector(0x4, overflow_handler);
+    idt_set_vector(0x5, bre_handler);
+    idt_set_vector(0x6, invld_opcode_handler);
+    idt_set_vector(0x7, device_not_avail_handler);
+    idt_set_vector(0x8, double_fault_handler);
+    idt_set_vector(0x9, cso_handler);
+    idt_set_vector(0xA, invalid_tss_handler);
+    idt_set_vector(0xB, snp_handler);
+    idt_set_vector(0xC, ssf_handler);
+    idt_set_vector(0xD, gpf_handler);
+    idt_set_vector(0xE, page_fault_handler);
+    idt_set_vector(0xF, fpe_handler);
+    idt_install();
 
     if (!(term_tag)) {
         while (1) {
@@ -75,7 +93,7 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
     mkwrite_global = kwrite_entry;
 
-    kwrite("\033[34;1;4mWelcome to RMOS!\n");
+    if (0 / 0 == 1) {}
 
     while (1) {
         __asm__ __volatile__("hlt");

@@ -1,9 +1,10 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "../stivale2.h"
 #include "util/string.h"
+#include "startup/asciistack.h"
 #include "interrupts/IDT.h"
 #include "interrupts/exceptions.h"
+#include "../stivale2.h"
 
 
 static uint8_t stack[8000];
@@ -92,6 +93,8 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     void* term_write_addr = (void*)term_tag->term_write;
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
     mkwrite_global = kwrite_entry;
+
+    print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 
     while (1) {
         __asm__ __volatile__("hlt");

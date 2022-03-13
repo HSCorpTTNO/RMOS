@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "../stivale2.h"
+#include "util/string.h"
+
 
 static uint8_t stack[8000];
 
@@ -44,6 +46,13 @@ static struct stivale2_header_tag_framebuffer lfb_tag = {
     .framebuffer_bpp = 0
 };
 
+static void(*mkwrite_global)(const char* str, size_t sz);
+
+
+void kwrite(const char* const STR) {
+    mkwrite_global(STR, strlen(STR));
+}
+
 
 __attribute__((section(".stivale2hdr"), used)) static struct stivale2_header stivale_hdr = {
     .entry_point = 0,
@@ -63,9 +72,10 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     }
 
     void* term_write_addr = (void*)term_tag->term_write;
-    void(*kwrite_main)(const char* str, size_t length) = term_write_addr;
+    void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
+    mkwrite_global = kwrite_entry;
 
-    kwrite_main("Hello!", 6);
+    kwrite("\033[34;1;4mWelcome to RMOS!\n");
 
     while (1) {
         __asm__ __volatile__("hlt");

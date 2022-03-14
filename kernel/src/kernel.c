@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include <util/string.h>
 #include <startup/asciistack.h>
-#include "startup/asciistack.h"
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
 #include "../stivale2.h"

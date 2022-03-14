@@ -3,6 +3,7 @@
 #include <startup/asciistack.h>
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
+#include <cpu/msr.h>
 
 
 static uint8_t stack[8000];
@@ -91,6 +92,11 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     void* term_write_addr = (void*)term_tag->term_write;
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
     mkwrite_global = kwrite_entry;
+
+    if (!(msr_supported())) {
+        kwrite("\033[41;1;37mERROR: MSR NOT SUPPORTED! RAISING ISR AT VECTOR 0x1!\n\n");
+        __asm__ __volatile__("int $0x1");
+    }
 
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 

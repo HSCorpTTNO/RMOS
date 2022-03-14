@@ -13,7 +13,7 @@ reset:
 	@ rm $$(find ./ -type f -name "*.o")
 
 run:
-	qemu-system-x86_64 -cdrom RMOS.iso -monitor stdio -d int -no-reboot -D logfile.txt -M smm=off
+	qemu-system-x86_64 -cdrom RMOS.iso -monitor stdio -d int -no-reboot -D logfile.txt -M smm=off 
 
 # DO NOT USE THIS WITHOUT KNOWING WHAT YOU ARE DOING!
 burn_danger:

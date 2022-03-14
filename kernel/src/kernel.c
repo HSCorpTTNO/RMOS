@@ -4,6 +4,7 @@
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
 #include <cpu/msr.h>
+#include <drivers/pic/APIC.h>
 
 
 static uint8_t stack[8000];
@@ -91,13 +92,28 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
 
     void* term_write_addr = (void*)term_tag->term_write;
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
-    mkwrite_global = kwrite_entry;
+    mkwrite_global = kwrite_entry; 
+
+    // HARDWARE SUPPORT CHECK.
+    volatile uint8_t supported = 1;
 
     if (!(msr_supported())) {
-        kwrite("\033[41;1;37mERROR: MSR NOT SUPPORTED! RAISING ISR AT VECTOR 0x1!\n\n");
+        kwrite("\n\n\033[41;1;37mERROR: MSR NOT SUPPORTED BY YOUR HARDWARE! RAISING ISR AT VECTOR 0x1!\n\n");
+        supported = 0;
+    }
+    
+    if (!(apic_supported())) {
+        kwrite("\n\n\033[41;1;37mERROR: APIC NOT SUPPORTED BY YOUR HARDWARE! RAISING ISR AT VECTOR 0x1\n\n");
+        supported = 0;
+    }
+
+    // RAISE ISR AT VECTOR 0x1 IF NOT SUPPORTED!
+
+    if (!(supported)) {
         __asm__ __volatile__("int $0x1");
     }
 
+    // PRINT STACK.
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 
     while (1) {

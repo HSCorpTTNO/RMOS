@@ -1,10 +1,8 @@
-#include <stdint.h>
-#include <stddef.h>
 #include <util/string.h>
+#include <util/deps.h>
 #include <startup/asciistack.h>
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
-#include "../stivale2.h"
 
 
 static uint8_t stack[8000];

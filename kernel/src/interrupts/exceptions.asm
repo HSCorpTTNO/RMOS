@@ -49,7 +49,7 @@ extern hex2str
     mov rdi, kernel_panic
     call kwrite
 
-    mov rdi, int_stack_dump_msg
+    mov rdi, int_dump_msg
     call kwrite
 
     write_reg __rip
@@ -111,7 +111,7 @@ fpe_handler:
     panic 0xF
 
 exception_start: db 0x0D, 0x0A, "FATAL CPU EXCEPTION: ", 0
-int_stack_dump_msg: db 0xD, 0xA, "<==== Interrupt Frame Dump ====>", 0xD, 0xA, 0xD, 0xA, 0
+int_dump_msg: db 0xD, 0xA, "<==== Interrupt Frame Dump ====>", 0xD, 0xA, 0xD, 0xA, 0
 newline: db 0x0D, 0x0A, 0
 kernel_panic: db 0xD, 0xA, "*** KERNEL PANIC ***", 0xD, 0xA, 0xD, 0xA, 0
 sys_halted: db 0xD, 0xA, "*** SYSTEM HALTED ***", 0xD, 0xA, 0xD, 0xA, 0

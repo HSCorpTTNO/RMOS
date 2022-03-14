@@ -5,7 +5,6 @@
 
 #include <stdint.h>
 
-
-void cpuid(int code, uint32_t* a, uint32_t* d); 
+void cpuid_subleaf(uint32_t leaf, uint32_t subleaf, uint32_t* rax, uint32_t* rbx, uint32_t* rcx, uint32_t* rdx);
 
 #endif

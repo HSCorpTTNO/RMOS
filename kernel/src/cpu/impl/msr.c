@@ -2,9 +2,9 @@
 
 
 uint8_t msr_supported() {
-    uint32_t rax, rdx;
-    cpuid(1, &rax, &rdx);
-    return rdx & CPUID_FLAG_MSR;
+    uint32_t eax, ebx, ecx, edx;
+    cpuid_subleaf(1, 0, &eax, &ebx, &ecx, &edx);
+    return edx & CPUID_FLAG_MSR;
 }
 
 

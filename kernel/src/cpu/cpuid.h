@@ -1,6 +1,8 @@
 #ifndef CPUID_H
 #define CPUID_H
 
+#define CPUID_FLAG_MSR (1 << 5)
+
 #include <stdint.h>
 
 

@@ -1,4 +1,4 @@
-#include <drivers/cpu/cpuid.h>
+#include <cpu/cpuid.h>
 
 
 inline void cpuid(int code, uint32_t* a, uint32_t* d) {

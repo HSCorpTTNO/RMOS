@@ -97,3 +97,19 @@ uint8_t* strncpy(uint8_t *dst, const uint8_t *src, const uint8_t len) {
 
     return dst;
 }
+
+
+
+uint8_t strncmp(char* s1, char* s2, uint32_t n) {
+    uint32_t n_cnt = 0;
+
+    while (s1 && s2 && n_cnt < n) {
+        if (*s1++ != *s2++) {
+            return 0;
+        } 
+
+        ++n_cnt; 
+    }
+
+    return 1;
+}

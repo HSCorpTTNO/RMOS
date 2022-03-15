@@ -14,6 +14,15 @@ typedef struct {
 
 
 typedef struct {
+    acpi_rsdp_t rsdp1;
+    uint32_t length;
+    uint64_t xsdtAddr;
+    uint8_t extendedChecksum;
+    uint8_t reserved[3];
+} __attribute__((packed)) acpi_rsdp2_t;
+
+
+typedef struct {
     char signature[8];
     uint8_t checksum;
     char oem[6];
@@ -146,5 +155,6 @@ typedef struct {
     uint32_t lapic_addr;
     uint32_t flags;
 } __attribute__((packed)) acpi_madt_t;
+
 
 #endif

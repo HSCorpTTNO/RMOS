@@ -1,6 +1,6 @@
 # RMOS
 
-RMOS is a UNIX-like kernel written in C and Assembly. It is currently in its early stages of development.  
+RMOS is a UNIX-like Operating System written in C and Assembly. It is currently in its early stages of development.  
 Anyone wanting to test this can clone it locally and run the kernel image in a virtualized environment such as QEMU.
 
 ### Contributors

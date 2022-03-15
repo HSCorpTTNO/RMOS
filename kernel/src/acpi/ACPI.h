@@ -3,15 +3,9 @@
 
 #include <acpi/tables.h>
 #include <util/stivaleutil.h>
-
-
-typedef enum {
-    TABLE_XSDT,
-    TABLE_RSDT
-} table_type_t;
+#include <drivers/video/Framebuffer.h>
 
 
 void init_acpi();
-acpi_fadt_t* find_fadt();
-uint8_t checksum_valid(void* table, table_type_t type);
+uint8_t checksum_valid(acpi_xsdt_t* table);
 #endif

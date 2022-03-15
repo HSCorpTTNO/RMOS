@@ -2,6 +2,7 @@
 
 static acpi_xsdt_t* xsdt = NULL;
 static acpi_madt_t* madt = NULL;
+uint8_t using_legacy_pic = 0;
 
 uint8_t checksum_valid(acpi_xsdt_t* table) {
     unsigned char checkum = 0;
@@ -27,17 +28,21 @@ void init_acpi(struct stivale2_struct* ss) {
     acpi_rsdt_t* rsdt = (acpi_rsdt_t*)(uint64_t)rsdp->rsdtaddr;
 
     volatile unsigned short tableidx = 0;
-    uint8_t apicFound = 0;
 
     while (tableidx < 10) {   
         acpi_madt_t* m = (acpi_madt_t*)(uint64_t)rsdt->tables[tableidx];
     
         if (strncmp(m->header.signature, "APIC", 4)) {
-            apicFound = 1;
             madt = m;
             break;
         }
 
         ++tableidx;
+    }
+
+    if (!(madt)) {
+        using_legacy_pic = 1;
+    } else {
+        lapic_set_addr((void*)(uint64_t)madt->lapic_addr);
     }
 }

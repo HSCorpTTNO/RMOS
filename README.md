@@ -12,4 +12,4 @@ Anyone wanting to test this can clone it locally and run the kernel image in a v
 
 ### Screenshots 
 
-![RMOS](https://cdn.discordapp.com/attachments/953028941403275264/953136920790204506/screenshot_049.png)
+![RMOS](https://cdn.discordapp.com/attachments/952776358176632902/953137477877649468/IMG_1891.png)

@@ -7,6 +7,6 @@
 #include <util/string.h>
 
 
-void init_acpi();
+void init_acpi(struct stivale2_struct* ss);
 uint8_t checksum_valid(acpi_xsdt_t* table);
 #endif

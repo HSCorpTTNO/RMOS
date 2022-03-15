@@ -10,7 +10,7 @@ typedef struct {
     char OEMID[6];
     uint8_t rev;
     uint32_t rsdtaddr;
-} __attribute__((packed)) acpi_rsdp;
+} __attribute__((packed)) acpi_rsdp_t;
 
 
 typedef struct {
@@ -22,7 +22,7 @@ typedef struct {
     uint32_t length;
     uint64_t xsdt;
     uint8_t extended_checksum;
-} __attribute__((packed)) acpi_xsdp;
+} __attribute__((packed)) acpi_xsdp_t;
 
 
 typedef struct {

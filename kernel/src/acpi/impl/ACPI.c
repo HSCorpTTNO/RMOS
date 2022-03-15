@@ -10,5 +10,4 @@ void init_acpi(struct stivale2_struct* ss) {
 
 
 acpi_fadt_t* find_fadt() {
-    uint64_t entries = 
 }

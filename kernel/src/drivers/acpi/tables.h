@@ -1,5 +1,5 @@
-#ifndef ACPI_H
-#define ACPI_H
+#ifndef TABLES_H
+#define TABLES_H
 
 #include <stdint.h>
 #include <stddef.h>

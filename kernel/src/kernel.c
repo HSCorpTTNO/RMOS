@@ -114,6 +114,7 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
         __asm__ __volatile__("int $0x1");
     }
 
+    init_acpi(ss);
     // PRINT STACK.
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 

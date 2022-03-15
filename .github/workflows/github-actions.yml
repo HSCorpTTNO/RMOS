@@ -1,5 +1,5 @@
 name: :)
-on: [commit]
+on: [push]
 jobs:
   actions:
     runs-on: ubuntu-latest

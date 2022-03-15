@@ -25,7 +25,7 @@ typedef struct {
 } __attribute__((packed)) acpi_xsdp;
 
 
-typedef struct {
+typedef struct acpi_header_t {
     char signature[4];
     uint32_t length;
     uint8_t revision;
@@ -38,14 +38,13 @@ typedef struct {
 } __attribute__((packed)) acpi_header_t;
 
 
-typedef struct {
+typedef struct acpi_rsdt_t {
     acpi_header_t header;
     uint32_t tables[];
 } __attribute__((packed)) acpi_rsdt_t;
 
 
-// Extended System Description Table 
-typedef struct {
+typedef struct acpi_xsdt_t {
     acpi_header_t header;
     uint64_t tables[];
 } __attribute__((packed)) acpi_xsdt_t;

@@ -140,4 +140,11 @@ typedef struct {
     uint8_t data[];
 } __attribute__((packed)) acpi_aml_t;
 
+
+typedef struct {
+    acpi_header_t header;
+    uint32_t lapic_addr;
+    uint32_t flags;
+} __attribute__((packed)) acpi_madt_t;
+
 #endif

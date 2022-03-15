@@ -2,6 +2,9 @@
 #define ACPI_H
 
 #include <stdint.h>
+#include <stddef.h>
+#include <util/stivaleutil.h>
+
 
 typedef struct {
     char signature[8];
@@ -21,10 +24,10 @@ typedef struct {
     uint32_t length;
     uint64_t xsdt;
     uint8_t extended_checksum;
-} __attribute__((packed)) acpi_xsdp_t;
+} __attribute__((packed)) acpi_xsdp_desc_t;
 
 
 void init_setup_acpi();
-
+uint16_t acipi_supported();
 
 #endif

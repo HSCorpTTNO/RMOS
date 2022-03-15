@@ -4,6 +4,7 @@
 #include <acpi/tables.h>
 #include <util/stivaleutil.h>
 #include <drivers/video/Framebuffer.h>
+#include <util/string.h>
 
 
 void init_acpi();

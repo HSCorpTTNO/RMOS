@@ -1,9 +1,9 @@
 #include <cpu/cpuid.h>
 
 
-inline void cpuid_subleaf(uint32_t leaf, uint32_t subleaf, uint32_t* rax, uint32_t* rbx, uint32_t* rcx, uint32_t* rdx) {
-    __asm__ __volatile__("cpuid":"=a"(*rax), "=b"(*rbx),
-            "=c"(*rcx), "=d"(*rdx)
+inline void cpuid_subleaf(uint32_t leaf, uint32_t subleaf, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint32_t* edx) {
+    __asm__ __volatile__("cpuid":"=a"(*eax), "=b"(*ebx),
+            "=c"(*ecx), "=d"(*edx)
             : "a" (leaf), "c" (subleaf)
             : "memory");
 }

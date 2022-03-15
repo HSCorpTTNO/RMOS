@@ -49,8 +49,4 @@ typedef struct acpi_xsdt_t {
     uint64_t tables[];
 } __attribute__((packed)) acpi_xsdt_t;
 
-
-void init_setup_acpi();
-uint16_t acipi_supported();
-
 #endif

@@ -4,7 +4,7 @@
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
 #include <cpu/msr.h>
-#include <drivers/pic/APIC.h>
+#include <acpi/ACPI.h>
 
 
 static uint8_t stack[8000];
@@ -66,7 +66,10 @@ __attribute__((section(".stivale2hdr"), used)) static struct stivale2_header sti
 
 
 void _start(struct stivale2_struct* ss, uint64_t id) {
+    // TAGS.
     struct stivale2_struct_tag_terminal* term_tag = get_tag(ss, STIVALE2_STRUCT_TAG_TERMINAL_ID);
+
+    // IDT SETUP.
     idt_set_vector(0x0, div0_handler);
     idt_set_vector(0x1, debug_excp_handler);
     idt_set_vector(0x3, breakpoint_handler);
@@ -84,28 +87,26 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     idt_set_vector(0xF, fpe_handler);
     idt_install();
 
+    // TAG VERIFICATION.
     if (!(term_tag)) {
         while (1) {
             __asm__ __volatile__("hlt");
         }
     }
 
+    // GRABBING TAG FUNCTIONS.
     void* term_write_addr = (void*)term_tag->term_write;
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
-    mkwrite_global = kwrite_entry; 
+    mkwrite_global = kwrite_entry;  
 
     // HARDWARE SUPPORT CHECK.
     volatile uint8_t supported = 1;
 
+    // SUPPORT CHECKING.
     if (!(msr_supported())) {
         kwrite("\n\n\033[41;1;37mERROR: MSR NOT SUPPORTED BY YOUR HARDWARE! RAISING ISR AT VECTOR 0x1!\n\n");
         supported = 0;
-    }
-    
-    if (!(apic_supported())) {
-        kwrite("\n\n\033[41;1;37mERROR: APIC NOT SUPPORTED BY YOUR HARDWARE! RAISING ISR AT VECTOR 0x1\n\n");
-        supported = 0;
-    }
+    } 
 
     // RAISE ISR AT VECTOR 0x1 IF NOT SUPPORTED!
 
@@ -116,6 +117,7 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     // PRINT STACK.
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 
+    // HALT UNTIL INTERRUPT.
     while (1) {
         __asm__ __volatile__("hlt");
     }

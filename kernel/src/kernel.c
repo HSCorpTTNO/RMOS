@@ -123,8 +123,9 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
 
     // <==== PIC INIT ====>
     uint8_t use_legacy_pic = 0;
-
-    if (!(using_legacy_pic)) {
+    
+    // If we aren't using legacy, check if APIC works.
+    if (!(using_legacy_pic)) {         // If APIC doens't work then use legacy PIC.
         if (!(cpu_lapic_init())) {
             use_legacy_pic = 1;
         }
@@ -133,6 +134,7 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     }
 
 
+    // Display a nice little message to show that we are using legacy PIC.
     if (use_legacy_pic) {
         kwrite("Using legacy PIC.\n\n");
         legacy_pic_init();

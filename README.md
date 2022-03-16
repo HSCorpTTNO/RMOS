@@ -4,7 +4,7 @@ RMOS is a UNIX-like Operating System written in C and Assembly. It is currently 
 Anyone wanting to test this can clone it locally and run the kernel image in a virtualized environment such as QEMU or vmware.
 
 Please note legacy support is not yet here, thus running RMOS in qemu will raise 
-CPU EXCEPTION 0x01 with a message saying: ***LEGACY HARDWARE IS NOT SUPPORT YET. RASING ISRQ AT VECTOR 0x01***
+CPU EXCEPTION 0x01 with a message saying: ***LEGACY HARDWARE IS NOT SUPPORT YET. RASING ISR AT VECTOR 0x01***
 
 ### Contributors
 

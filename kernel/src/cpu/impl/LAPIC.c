@@ -27,24 +27,5 @@ void cpu_lapic_write_reg(uint32_t reg, uint32_t dword) {
 }
 
 
-uint8_t cpu_lapic_init() {
-    uint32_t eax, ebx, ecx, edx;
-
-    // Preform CPUID to check for APIC support.
-    cpuid_subleaf(1, 0, &eax, &ebx, &ecx, &edx);
-
-    // Check if bit 9 of edx is set.
-    // If not, APIC is not supported.
-    if (!((edx >> 9) & 0x1)) {
-        return 0;
-    }
-
-    // Disable 8259 PIC.
-    outportb(0x21, 0xFF);
-    outportb(0xA1, 0xFF);
-
-    // Init APIC.
-    cpu_lapic_write_reg(LAPIC_TASK_PRIORITY_REG, 0);
-    cpu_set_msr(IA32_APIC_BASE_MSR, 1 << 11, 0x0);
-    outportl(0xF0, 0xFF);       // To enable APIC set SIV reg to 0xFF.
+uint8_t cpu_lapic_init() { 
 }

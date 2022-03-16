@@ -4,8 +4,8 @@
 #include <interrupts/IDT.h>
 #include <interrupts/exceptions.h>
 #include <cpu/msr.h>
-#include <acpi/ACPI.h>
 #include <cpu/LAPIC.h>
+#include <acpi/ACPI.h>
 #include <IO/PICLegacy.h>
 
 
@@ -122,9 +122,18 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     init_acpi(ss);
 
     // PIC INIT.
+    
+    uint8_t use_legacy_pic = 0;
+
     if (!(using_legacy_pic)) {
-        cpu_lapic_init();
+        if (!(cpu_lapic_init())) {
+            use_legacy_pic = 1;
+        }
     } else {
+        use_legacy_pic = 1;
+    }
+
+    if (use_legacy_pic) {
         kwrite("Using legacy PIC.\n\n");
         legacy_pic_init();
     }

@@ -33,9 +33,9 @@ uint8_t cpu_lapic_init() {
     // Preform CPUID to check for APIC support.
     cpuid_subleaf(1, 0, &eax, &ebx, &ecx, &edx);
 
-    // Check if bit 32 of ecx is set.
+    // Check if bit 9 of edx is set.
     // If not, APIC is not supported.
-    if (!((ecx >> 21) & 0x1)) {
+    if (!((edx >> 9) & 0x1)) {
         return 0;
     }
 

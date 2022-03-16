@@ -46,5 +46,5 @@ uint8_t cpu_lapic_init() {
     // Init APIC.
     cpu_lapic_write_reg(LAPIC_TASK_PRIORITY_REG, 0);
     cpu_set_msr(IA32_APIC_BASE_MSR, 1 << 11, 0x0);
-    outportl(0xF0, inportl(0xF0) | 0x100);
+    outportl(0xF0, 0xFF);       // To enable APIC set SIV reg to 0xFF.
 }

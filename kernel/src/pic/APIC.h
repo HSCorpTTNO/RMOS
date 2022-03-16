@@ -1,9 +1,6 @@
 #ifndef APIC_H
 #define APIC_H
 
-#include <stddef.h>
-#include <stdint.h>
-
 #define LAPIC_ID_REG 0x20
 #define LAPIC_VERSION_REG 0x30
 #define LAPIC_TASK_PRIORITY_REG 0x80
@@ -22,11 +19,21 @@
 #define LAPIC_LVT_LINT1_REG 0x360
 #define LAPIC_LVT_ERROR_REG 0x370
 
+#include <stddef.h>
+#include <stdint.h>
+#include <cpu/msr.h>
+#include <cpu/cpuid.h>
+#include <IO/IO.h>
 
 // Sets static global variable defiend in APIC.c
 void lapic_set_addr(void* addr);
 
 // Allows you to read LAPIC MMIO register.
-void cpu_lapic_read_reg(void* io_lapic_addr, uint32_t reg);
+uint32_t cpu_lapic_read_reg(uint32_t reg);
+
+// Allows you to write to a LAPIC MMIO register.
+void cpu_lapic_write_reg(uint32_t reg, uint32_t dword);
+
+uint8_t cpu_lapic_init();
 
 #endif

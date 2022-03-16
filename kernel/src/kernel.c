@@ -68,13 +68,13 @@ __attribute__((section(".stivale2hdr"), used)) static struct stivale2_header sti
 
 
 void _start(struct stivale2_struct* ss, uint64_t id) {
-    // EXTERNEL VARIABLES.
+    // <==== EXTERNEL VARIABLES ====>
     extern uint8_t using_legacy_pic;
 
-    // TAGS.
+    // <==== TAGS ====>
     struct stivale2_struct_tag_terminal* term_tag = get_tag(ss, STIVALE2_STRUCT_TAG_TERMINAL_ID);
 
-    // IDT SETUP.
+    // <==== IDT SETUP ====>
     idt_set_vector(0x0, div0_handler);
     idt_set_vector(0x1, debug_excp_handler);
     idt_set_vector(0x3, breakpoint_handler);
@@ -92,37 +92,36 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     idt_set_vector(0xF, fpe_handler);
     idt_install();
 
-    // TAG VERIFICATION.
+    // <==== TAG VERIFICATION ====>
     if (!(term_tag)) {
         while (1) {
             __asm__ __volatile__("hlt");
         }
     }
 
-    // GRABBING TAG FUNCTIONS.
+    // <==== GRABBING TAG FUNCTIONS ====>
     void* term_write_addr = (void*)term_tag->term_write;
     void(*kwrite_entry)(const char* str, size_t length) = term_write_addr;
     mkwrite_global = kwrite_entry;  
 
-    // HARDWARE SUPPORT CHECK.
+    // <==== HARDWARE SUPPORT CHECK ====>
     volatile uint8_t supported = 1;
 
-    // SUPPORT CHECKING.
+    // <==== SUPPORT CHECKING ====>
     if (!(msr_supported())) {
         kwrite("\n\n\033[41;1;37mERROR: MSR NOT SUPPORTED BY YOUR HARDWARE! RAISING ISR AT VECTOR 0x1!\n\n");
         supported = 0;
     } 
 
-    // RAISE ISR AT VECTOR 0x1 IF NOT SUPPORTED!
+    // <==== RAISE ISR AT VECTOR 0x1 IF NOT SUPPORTED! ====>
     if (!(supported)) {
         __asm__ __volatile__("int $0x1");
     }
 
-    // Setup some ACPI stuff.
+    // <====Setup some ACPI stuff ====>
     init_acpi(ss);
 
-    // PIC INIT.
-    
+    // <==== PIC INIT ====>
     uint8_t use_legacy_pic = 0;
 
     if (!(using_legacy_pic)) {
@@ -133,15 +132,16 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
         use_legacy_pic = 1;
     }
 
+
     if (use_legacy_pic) {
         kwrite("Using legacy PIC.\n\n");
         legacy_pic_init();
     }
 
-    // PRINT STACK.
+    // <==== PRINT STACK ====>
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 
-    // HALT UNTIL INTERRUPT.
+    // <==== HALT UNTIL INTERRUPT ====>
     while (1) {
         __asm__ __volatile__("hlt");
     }

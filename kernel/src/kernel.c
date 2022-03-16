@@ -6,6 +6,7 @@
 #include <cpu/msr.h>
 #include <acpi/ACPI.h>
 #include <cpu/LAPIC.h>
+#include <IO/PICLegacy.h>
 
 
 static uint8_t stack[8000];
@@ -67,6 +68,9 @@ __attribute__((section(".stivale2hdr"), used)) static struct stivale2_header sti
 
 
 void _start(struct stivale2_struct* ss, uint64_t id) {
+    // EXTERNEL VARIABLES.
+    extern uint8_t using_legacy_pic;
+
     // TAGS.
     struct stivale2_struct_tag_terminal* term_tag = get_tag(ss, STIVALE2_STRUCT_TAG_TERMINAL_ID);
 
@@ -117,8 +121,13 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     // Setup some ACPI stuff.
     init_acpi(ss);
 
-    // Init local APIC.
-    cpu_lapic_init();
+    // PIC INIT.
+    if (!(using_legacy_pic)) {
+        cpu_lapic_init();
+    } else {
+        kwrite("Using legacy PIC.\n\n");
+        legacy_pic_init();
+    }
 
     // PRINT STACK.
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));

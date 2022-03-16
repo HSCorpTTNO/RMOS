@@ -5,6 +5,7 @@
 #include <interrupts/exceptions.h>
 #include <cpu/msr.h>
 #include <acpi/ACPI.h>
+#include <pic/APIC.h>
 
 
 static uint8_t stack[8000];
@@ -109,12 +110,16 @@ void _start(struct stivale2_struct* ss, uint64_t id) {
     } 
 
     // RAISE ISR AT VECTOR 0x1 IF NOT SUPPORTED!
-
     if (!(supported)) {
         __asm__ __volatile__("int $0x1");
     }
 
+    // Setup some ACPI stuff.
     init_acpi(ss);
+
+    // Init local APIC.
+    cpu_lapic_init();
+
     // PRINT STACK.
     print_stack((uint8_t*)(uint64_t)(stack + sizeof(stack)));
 

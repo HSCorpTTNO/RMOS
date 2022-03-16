@@ -5,7 +5,7 @@
 #include <util/stivaleutil.h>
 #include <util/string.h>
 #include <drivers/video/Framebuffer.h>
-#include <pic/APIC.h>
+#include <cpu/LAPIC.h>
 
 
 void init_acpi(struct stivale2_struct* ss);

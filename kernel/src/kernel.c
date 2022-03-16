@@ -5,7 +5,7 @@
 #include <interrupts/exceptions.h>
 #include <cpu/msr.h>
 #include <acpi/ACPI.h>
-#include <pic/APIC.h>
+#include <cpu/LAPIC.h>
 
 
 static uint8_t stack[8000];

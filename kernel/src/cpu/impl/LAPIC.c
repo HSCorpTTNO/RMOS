@@ -1,4 +1,4 @@
-#include <pic/APIC.h>
+#include <cpu/LAPIC.h>
 
 #define IA32_APIC_BASE_MSR_ENABLE 0x800
 #define IA32_APIC_BASE_MSR 0x1B

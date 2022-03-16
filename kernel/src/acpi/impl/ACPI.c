@@ -21,7 +21,7 @@ void init_acpi(struct stivale2_struct* ss) {
 
     // Check if it is legacy hardware. 
     if (rsdp->rev == 0) {
-        kwrite("\033[41;1;37mLEGACY HARDWARE IS NOT SUPPORTED YET. RASING ISR IN VECTOR 0x01.\n\n");
+        kwrite("\033[41;1;37mLEGACY HARDWARE IS NOT SUPPORTED YET. RASING ISR AT VECTOR 0x01.\n\n");
         __asm__ __volatile__("int $0x1");
     }
 

@@ -6,8 +6,9 @@
 #include <util/string.h>
 #include <drivers/video/Framebuffer.h>
 #include <cpu/LAPIC.h>
-
+#include <IO/IOAPIC.h>
 
 void init_acpi(struct stivale2_struct* ss);
 uint8_t checksum_valid(acpi_xsdt_t* table);
+
 #endif
